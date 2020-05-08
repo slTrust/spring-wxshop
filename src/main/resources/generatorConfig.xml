@@ -33,8 +33,8 @@
             <columnOverride column="AVATAR_URL" property="avatarUrl" />
             <!-- 忽略的列 -->
             <!-- <ignoreColumn column="FRED" /> -->
-            <columnOverride column="CREATED_AT" jdbcType="createdAt" />
-            <columnOverride column="UPDATED_AT" jdbcType="updatedAt" />
+            <columnOverride column="CREATED_AT" property="createdAt" />
+            <columnOverride column="UPDATED_AT" property="updatedAt" />
         </table>
 
     </context>
