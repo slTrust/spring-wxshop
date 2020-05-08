@@ -16,13 +16,13 @@ import java.util.Map;
 @Configuration
 public class ShiroConfig {
     @Bean
-    public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager){
+    public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 
-        Map<String,String> pattern = new HashMap<>();
-        pattern.put("/api/code","anon"); // anon 默认匿名可以登录
-        pattern.put("/api/login","anon");
+        Map<String, String> pattern = new HashMap<>();
+        pattern.put("/api/code", "anon"); // anon 默认匿名可以登录
+        pattern.put("/api/login", "anon");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(pattern);
         return shiroFilterFactoryBean;
@@ -30,11 +30,11 @@ public class ShiroConfig {
 
     // 核心是这个 SecurityManager
     @Bean
-    public SecurityManager securityManager(ShiroRealm shiroRealm){
+    public SecurityManager securityManager(ShiroRealm shiroRealm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
 
         // 设置领域
-         securityManager.setRealm(shiroRealm);
+        securityManager.setRealm(shiroRealm);
 
         // 注意！ 这个是放在内存里，会把内存撑爆，未来应该放在redis里
         securityManager.setCacheManager(new MemoryConstrainedCacheManager()); // MemoryConstrainedCacheManager 是放在内存
@@ -43,7 +43,7 @@ public class ShiroConfig {
     }
 
     @Bean
-    public ShiroRealm myShiroRealm(VerificationCodeCheckService verificationCodeCheckService){
+    public ShiroRealm myShiroRealm(VerificationCodeCheckService verificationCodeCheckService) {
         return new ShiroRealm(verificationCodeCheckService);
     }
 }
