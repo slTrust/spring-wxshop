@@ -1,15 +1,14 @@
 package com.oak.wxshop;
 
+import com.oak.wxshop.entity.LoginResponse;
 import com.oak.wxshop.service.AuthService;
 import com.oak.wxshop.service.TelVerificationService;
+import com.oak.wxshop.service.UserContext;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -42,6 +41,23 @@ public class AuthController {
 
         SecurityUtils.getSubject().login(token);
     }
+
+    @PostMapping("/logout")
+    public void login() {
+        SecurityUtils.getSubject().logout();
+    }
+
+    // 查询登录状态  根据登录之后的cookie
+    @GetMapping("/status")
+    public Object loginStatus() {
+        System.out.println(SecurityUtils.getSubject().getPrincipal());
+        if (UserContext.getCurrentUser() == null) {
+            return LoginResponse.notLogin();
+        } else {
+            return LoginResponse.login(UserContext.getCurrentUser());
+        }
+    }
+
 
     public static class TelAndCode {
         private String tel;

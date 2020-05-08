@@ -4,6 +4,7 @@ import com.oak.wxshop.UserDao;
 import com.oak.wxshop.generate.User;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.stereotype.Service;
+
 import java.util.Date;
 
 @Service
@@ -21,7 +22,7 @@ public class UserService {
         user.setUpdatedAt(new Date());
         try {
             userDao.insertUser(user);
-        } catch (PersistenceException e){
+        } catch (PersistenceException e) {
             return userDao.getUserByTel(tel);
         }
         return user;
@@ -31,5 +32,15 @@ public class UserService {
             insertUser
         }
          */
+    }
+
+    /**
+     * 根据电话返回用户，如果用户不存在返回 null
+     *
+     * @param tel
+     * @return 返回用户
+     */
+    public User getUserByTel(String tel) {
+        return userDao.getUserByTel(tel);
     }
 }

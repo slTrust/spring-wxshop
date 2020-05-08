@@ -185,7 +185,8 @@
 										<limit>
 											<counter>COMPLEXITY</counter>
 											<value>COVEREDRATIO</value>
-											<minimum>0.60</minimum>
+											<!--测试覆盖率 可以调低一点 -->
+											<minimum>0.40</minimum>
 										</limit>
 									</limits>
 								</rule>
