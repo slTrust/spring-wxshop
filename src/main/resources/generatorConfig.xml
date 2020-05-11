@@ -6,6 +6,8 @@
 <generatorConfiguration>
 
     <context id="wxshop" targetRuntime="MyBatis3">
+        <!-- 解决构造器注入 mapper not found 问题 ,添加此行 -->
+        <plugin type="org.mybatis.generator.plugins.MapperAnnotationPlugin" />
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3307/wxshop?useSSL=false&amp;allowPublicKeyRetrieval=true"
                         userId="root"
