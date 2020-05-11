@@ -25,16 +25,21 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
-        <!--数据库的名字-->
         <table schema="wxshop" tableName="USER" domainObjectName="User" >
-            <!-- 数据库的列和 对象的字段一一对应起来 名称一致，但是我不想要 User的字段里有下划线 所以false -->
             <property name="useActualColumnNames" value="false"/>
             <generatedKey column="ID" sqlStatement="MySql" identity="true" />
-            <columnOverride column="AVATAR_URL" property="avatarUrl" />
-            <!-- 忽略的列 -->
-            <!-- <ignoreColumn column="FRED" /> -->
-            <columnOverride column="CREATED_AT" property="createdAt" />
-            <columnOverride column="UPDATED_AT" property="updatedAt" />
+        </table>
+        <table schema="wxshop" tableName="GOODS" domainObjectName="Goods" >
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="ID" sqlStatement="MySql" identity="true" />
+        </table>
+        <table schema="wxshop" tableName="ORDER" domainObjectName="Order" >
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="ID" sqlStatement="MySql" identity="true" />
+        </table>
+        <table schema="wxshop" tableName="SHOPPING_CART" domainObjectName="ShoppingCart" >
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="ID" sqlStatement="MySql" identity="true" />
         </table>
 
     </context>
