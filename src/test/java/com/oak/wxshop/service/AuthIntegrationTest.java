@@ -63,23 +63,23 @@ public class AuthIntegrationTest {
     @Test
     public void loginLogoutTest() throws JsonProcessingException {
         // 最开始访问 /api/status 处于未登录状态
-        String statusResponse = doHttpRequest("/api/status", true, null, null).body;
+        String statusResponse = doHttpRequest("/api/v1/status", true, null, null).body;
         LoginResponse response = objectMapper.readValue(statusResponse, LoginResponse.class);
         Assertions.assertFalse(response.isLogin());
 
         // 发送验证码
-        int responseCode = doHttpRequest("/api/code", false, VALID_PARAMETER, null).code;
+        int responseCode = doHttpRequest("/api/v1/code", false, VALID_PARAMETER, null).code;
         Assertions.assertEquals(HTTP_OK, responseCode);
 
         // 带着验证码进行登录，得到Cookie
-        Map<String, List<String>> responseHeaders = doHttpRequest("/api/login", false, VALID_PARAMETER_CODE, null).headers;
+        Map<String, List<String>> responseHeaders = doHttpRequest("/api/v1/login", false, VALID_PARAMETER_CODE, null).headers;
         List<String> setCookie = responseHeaders.get("Set-Cookie");
         String sessionId = getSessionIdFromSetCookie(setCookie.stream().filter(cookie -> cookie.contains("JSESSIONID"))
                 .findFirst()
                 .get());
 
         // 带着cookie访问 /api/status 处于登录状态
-        statusResponse = doHttpRequest("/api/status", true, null, sessionId).body;
+        statusResponse = doHttpRequest("/api/v1/status", true, null, sessionId).body;
         response = objectMapper.readValue(statusResponse, LoginResponse.class);
         Assertions.assertTrue(response.isLogin());
         Assertions.assertEquals(VALID_PARAMETER.getTel(), response.getUser().getTel());
@@ -87,10 +87,10 @@ public class AuthIntegrationTest {
 
         // 调用 /api/logout
         // 注销登录 ,此时需要带上cookie 不然不知道谁是注销的
-        doHttpRequest("/api/logout", false, null, sessionId);
+        doHttpRequest("/api/v1/logout", false, null, sessionId);
 
         // 再次带着Cookie访问 /api/status 恢复成为未登录状态
-        statusResponse = doHttpRequest("/api/status", true, null, sessionId).body;
+        statusResponse = doHttpRequest("/api/v1/status", true, null, sessionId).body;
         response = objectMapper.readValue(statusResponse, LoginResponse.class);
         Assertions.assertFalse(response.isLogin());
 
@@ -105,7 +105,7 @@ public class AuthIntegrationTest {
 
     @Test
     public void returnHttpOKWhenParameterIsCorrect() throws JsonProcessingException {
-        int responseCode = HttpRequest.post(getUrl("/api/code"))
+        int responseCode = HttpRequest.post(getUrl("/api/v1/code"))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .send(objectMapper.writeValueAsString(VALID_PARAMETER))
@@ -115,7 +115,7 @@ public class AuthIntegrationTest {
 
     @Test
     public void returnHttpBadRequestWhenParameterIsCorrect() throws JsonProcessingException {
-        int responseCode = HttpRequest.post(getUrl("/api/code"))
+        int responseCode = HttpRequest.post(getUrl("/api/v1/code"))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .send(objectMapper.writeValueAsString(TelVerificationServiceTest.EMPTY_TEL))
