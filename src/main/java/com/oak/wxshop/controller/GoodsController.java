@@ -113,6 +113,12 @@ public class GoodsController {
      * "message": "Unauthorized"
      * }
      */
+
+    /**
+     * @param goods goods to be created
+     * @param response the HTTP response
+     * @return the newly created goods
+     */
     // @formatter:on
     @PostMapping("/goods")
     public Response<Goods> createdGoods(@RequestBody Goods goods, HttpServletResponse response) {
@@ -215,6 +221,12 @@ public class GoodsController {
      * {
      * "message": "Unauthorized"
      * }
+     */
+
+    /**
+     * @param goodsId the goods id to be deleted
+     * @param response the HTTP response
+     * @return the deleted goods
      */
     // @formatter:on
     @DeleteMapping("/goods/{id}")
