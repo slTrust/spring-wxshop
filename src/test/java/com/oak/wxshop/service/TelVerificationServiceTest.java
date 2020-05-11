@@ -1,6 +1,6 @@
 package com.oak.wxshop.service;
 
-import com.oak.wxshop.AuthController;
+import com.oak.wxshop.controller.AuthController;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
