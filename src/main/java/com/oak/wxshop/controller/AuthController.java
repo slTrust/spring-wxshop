@@ -1,4 +1,4 @@
-package com.oak.wxshop;
+package com.oak.wxshop.controller;
 
 import com.oak.wxshop.entity.LoginResponse;
 import com.oak.wxshop.service.AuthService;
@@ -50,7 +50,6 @@ public class AuthController {
     // 查询登录状态  根据登录之后的cookie
     @GetMapping("/status")
     public Object loginStatus() {
-        System.out.println(SecurityUtils.getSubject().getPrincipal());
         if (UserContext.getCurrentUser() == null) {
             return LoginResponse.notLogin();
         } else {
