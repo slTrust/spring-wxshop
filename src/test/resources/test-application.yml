@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3308/wxshop?useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+    driverClassName: com.mysql.cj.jdbc.Driver
+mybatis:
+  config-location: classpath:db/mybatis/config.xml
+
+
+# docker 方式启动一个数据库，注意端口 正式的数据库和测试数据库应该隔离
+# docker run -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=wxshop -p 3308:3306 -d mysql
