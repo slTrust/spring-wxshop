@@ -1,5 +1,7 @@
 package com.oak.wxshop.entity;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 public class Response<T> {
     private String message;
     private T data;
@@ -15,6 +17,7 @@ public class Response<T> {
     public Response() {
     }
 
+    @SuppressFBWarnings("URF_UNREAD_FIELD")
     public Response(String message, T data) {
         this.message = message;
         this.data = data;

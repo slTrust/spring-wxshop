@@ -1,6 +1,7 @@
 package com.oak.wxshop.controller;
 
-import com.oak.wxshop.dao.GoodsDao;
+import com.oak.wxshop.entity.HttpException;
+import com.oak.wxshop.entity.PageResponse;
 import com.oak.wxshop.entity.Response;
 import com.oak.wxshop.generate.Goods;
 import com.oak.wxshop.service.GoodsService;
@@ -66,8 +67,20 @@ public class GoodsController {
      * "message": "Unauthorized"
      * }
      */
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param shopId
+     * @return PageResponse<Goods>
+     */
     // @formatter:on
-    public void getGoods() {
+    @GetMapping("/goods")
+    @ResponseBody
+    public PageResponse<Goods> getGoods(@RequestParam("pageNumber") Integer pageNumber,
+                                 @RequestParam("pageSize") Integer pageSize,
+                                 @RequestParam(value = "shopId", required = false) Integer shopId
+                         ) {
+        return goodsService.getGoods(pageNumber, pageSize, shopId);
     }
 
     // @formatter:off
@@ -126,7 +139,7 @@ public class GoodsController {
         response.setStatus(HttpServletResponse.SC_CREATED);
         try {
             return Response.of(goodsService.createGoods(goods));
-        } catch (GoodsService.NotAuthorizedForShopException e) {
+        } catch (HttpException e) {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             return Response.of(e.getMessage(), null);
         }
@@ -234,11 +247,8 @@ public class GoodsController {
         try {
             response.setStatus(HttpServletResponse.SC_NO_CONTENT);
             return Response.of(goodsService.deleteGoodsById(goodsId));
-        } catch (GoodsService.NotAuthorizedForShopException e) {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            return Response.of(e.getMessage(), null);
-        } catch (GoodsDao.ResourceNotFoundException e) {
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        } catch (HttpException e) {
+            response.setStatus(e.getStatusCode());
             return Response.of(e.getMessage(), null);
         }
     }
