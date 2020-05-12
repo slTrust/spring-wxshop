@@ -78,6 +78,11 @@
             <version>6.3.2</version>
             <scope>test</scope>
         </dependency>
+		<dependency>
+			<groupId>com.google.code.findbugs</groupId>
+			<artifactId>annotations</artifactId>
+			<version>3.0.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -99,14 +104,23 @@
 			<plugin>
 				<groupId>org.mybatis.generator</groupId>
 				<artifactId>mybatis-generator-maven-plugin</artifactId>
-				<version>1.4.0</version>
+				<version>1.3.7</version>
 				<dependencies>
 					<dependency>
 						<groupId>mysql</groupId>
 						<artifactId>mysql-connector-java</artifactId>
 						<version>8.0.19</version>
 					</dependency>
+					<dependency>
+						<groupId>com.qiukeke</groupId>
+						<artifactId>mybatis-generator-limit-plugin</artifactId>
+						<version>1.0.4</version>
+					</dependency>
 				</dependencies>
+				<!-- 每次generate会覆盖，而不是新生成 -->
+				<configuration>
+					<overwrite>true</overwrite>
+				</configuration>
 			</plugin>
             <plugin>
                 <artifactId>maven-checkstyle-plugin</artifactId>

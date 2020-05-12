@@ -24,7 +24,7 @@ public class AuthIntegrationTest extends AbstractIntegrationTest{
 
     @Test
     public void loginLogoutTest() throws JsonProcessingException {
-        String sessionId = loginAndGetCookie();
+        String sessionId = loginAndGetCookie().cookie;
 
         // 带着cookie访问 /api/status 处于登录状态
         String statusResponse = doHttpRequest("/api/v1/status", "GET", null, sessionId).body;
