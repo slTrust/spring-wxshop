@@ -1,6 +1,8 @@
 package com.oak.wxshop.controller;
 
+import com.oak.wxshop.entity.HttpException;
 import com.oak.wxshop.entity.PageResponse;
+import com.oak.wxshop.entity.Response;
 import com.oak.wxshop.entity.ShoppingCartData;
 import com.oak.wxshop.service.ShoppingCartService;
 import com.oak.wxshop.service.UserContext;
@@ -168,11 +170,18 @@ public class ShoppingCartController {
      *    }
      */
     /**
-     * @param request 参数
+     *
+     * @param request 加购物车请求
+     * @return 添加后的结果
      */
     // @formatter:on
     @PostMapping("/shoppingCart")
-    public void addToShoppingCart(@RequestBody AddToShoppingCartRequest request) {
+    public Response<ShoppingCartData> addToShoppingCart(@RequestBody AddToShoppingCartRequest request) {
+        try {
+            return Response.of(shoppingCartService.addToShoppingCart(request));
+        } catch (HttpException e) {
+            return Response.of(e.getMessage(), null);
+        }
     }
 
     public static class AddToShoppingCartRequest {
