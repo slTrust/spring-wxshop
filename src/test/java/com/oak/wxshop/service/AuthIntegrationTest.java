@@ -19,7 +19,7 @@ import static java.net.HttpURLConnection.HTTP_OK;
 
 @ExtendWith(SpringExtension.class) // 通过这个可以使用 spring相关的功能
 @SpringBootTest(classes = WxshopApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT) // 选择随机端口
-@TestPropertySource(locations = "classpath:application.yml")
+@TestPropertySource(properties = {"spring.config.location=classpath:test-application.yml"})
 public class AuthIntegrationTest extends AbstractIntegrationTest{
 
     @Test

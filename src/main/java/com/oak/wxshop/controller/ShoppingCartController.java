@@ -1,11 +1,27 @@
 package com.oak.wxshop.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.oak.wxshop.entity.PageResponse;
+import com.oak.wxshop.entity.ShoppingCartData;
+import com.oak.wxshop.service.ShoppingCartService;
+import com.oak.wxshop.service.UserContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 public class ShoppingCartController {
+    private static Logger logger = LoggerFactory.getLogger(ShoppingCartController.class);
+
+    private final ShoppingCartService shoppingCartService;
+
+    @Autowired
+    public ShoppingCartController(ShoppingCartService shoppingCartService) {
+        this.shoppingCartService = shoppingCartService;
+    }
     // @formatter:off
     /**
      * @api {get} /shoppingCart 获取当前用户名下的所有购物车物品
@@ -68,8 +84,21 @@ public class ShoppingCartController {
      *       "message": "Unauthorized"
      *     }
      */
+    /**
+     *
+     * @param pageNum 页码
+     * @param pageSize 每页元素数量
+     * @return 结果
+     */
     // @formatter:on
-    public void getShoppingCart() {
+    @GetMapping("/shoppingCart")
+    public PageResponse<ShoppingCartData> getShoppingCart(
+            @RequestParam("pageNum") int pageNum,
+            @RequestParam("pageSize") int pageSize
+    ) {
+        return shoppingCartService.getShoppingCartOfUser(UserContext.getCurrentUser().getId(),
+                pageNum,
+                pageSize);
     }
 
     // @formatter:off
@@ -135,10 +164,48 @@ public class ShoppingCartController {
      *     HTTP/1.1 401 Unauthorized
      *     {
      *       "message": "Unauthorized"
-     *     }
+     *
+     *    }
+     */
+    /**
+     * @param request 参数
      */
     // @formatter:on
-    public void addShoppingCart() {
+    @PostMapping("/shoppingCart")
+    public void addToShoppingCart(@RequestBody AddToShoppingCartRequest request) {
+    }
+
+    public static class AddToShoppingCartRequest {
+        List<AddToShoppingCartItem> goods;
+
+        public List<AddToShoppingCartItem> getGoods() {
+            return goods;
+        }
+
+        public void setGoods(List<AddToShoppingCartItem> goods) {
+            this.goods = goods;
+        }
+    }
+
+    public static class AddToShoppingCartItem {
+        long id;
+        int number;
+
+        public long getId() {
+            return id;
+        }
+
+        public void setId(long id) {
+            this.id = id;
+        }
+
+        public int getNumber() {
+            return number;
+        }
+
+        public void setNumber(int number) {
+            this.number = number;
+        }
     }
 
     // @formatter:off

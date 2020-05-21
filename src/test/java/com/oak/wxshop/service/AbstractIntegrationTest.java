@@ -1,6 +1,7 @@
 package com.oak.wxshop.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.kevinsawicki.http.HttpRequest;
 import com.oak.wxshop.entity.LoginResponse;
@@ -42,7 +43,7 @@ public class AbstractIntegrationTest {
         flyway.migrate();
     }
 
-    public ObjectMapper objectMapper = new ObjectMapper();
+    public static ObjectMapper objectMapper = new ObjectMapper();
 
     public String getUrl(String apiName) {
         // 获取集成测试的端口号
@@ -98,6 +99,11 @@ public class AbstractIntegrationTest {
             this.body = body;
             this.headers = headers;
         }
+
+        public <T> T asJsonObject(TypeReference<T> typeReference) throws JsonProcessingException {
+            T result = objectMapper.readValue(body, typeReference);
+            return result;
+        }
     }
 
     public HttpResponse doHttpRequest(String apiName, String httpMethod, Object requestBody, String cookie) throws JsonProcessingException {
@@ -113,5 +119,7 @@ public class AbstractIntegrationTest {
 
         return new HttpResponse(request.code(), request.body(), request.headers());
     }
+
 }
+
 
