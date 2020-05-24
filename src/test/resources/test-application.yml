@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: test-wxshop
   datasource:
     url: jdbc:mysql://localhost:3308/wxshop?useSSL=false&allowPublicKeyRetrieval=true
     username: root
@@ -7,6 +9,18 @@ spring:
 mybatis:
   config-location: classpath:db/mybatis/config.xml
 
+wxshop:
+  orderservice:
+    version: 1.0.0
+    url: dubbo://127.0.0.1:12345
+dubbo:
+  scan:
+    base-packages: com.oak.wxshop.mock
+  protocol:
+    name: dubbo
+    port: 12345
+  registry:
+    address: zookeeper://127.0.0.1:2181
 
 # docker 方式启动一个数据库，注意端口 正式的数据库和测试数据库应该隔离
 # docker run -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=wxshop -p 3308:3306 -d mysql

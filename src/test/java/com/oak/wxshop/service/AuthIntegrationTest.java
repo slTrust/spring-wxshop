@@ -3,10 +3,12 @@ package com.oak.wxshop.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.kevinsawicki.http.HttpRequest;
 import com.oak.wxshop.WxshopApplication;
+import com.oak.wxshop.api.OrderService;
 import com.oak.wxshop.entity.LoginResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
@@ -21,6 +23,8 @@ import static java.net.HttpURLConnection.HTTP_OK;
 @SpringBootTest(classes = WxshopApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT) // 选择随机端口
 @TestPropertySource(properties = {"spring.config.location=classpath:test-application.yml"})
 public class AuthIntegrationTest extends AbstractIntegrationTest{
+    @Autowired
+    OrderService orderService;
 
     @Test
     public void loginLogoutTest() throws JsonProcessingException {

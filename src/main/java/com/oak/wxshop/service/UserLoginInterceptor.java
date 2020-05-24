@@ -27,7 +27,6 @@ public class UserLoginInterceptor implements HandlerInterceptor {
         } else {
 
         }
-        System.out.println("pre");
         return true;
     }
 
@@ -37,6 +36,5 @@ public class UserLoginInterceptor implements HandlerInterceptor {
         // 如果线程1中保存用户A的信息，且没有清理
         // 下次线程1再次处理别的请求的时候，就会出现"串号"的的情况
         UserContext.setCurrentUser(null);
-        System.out.println("Post");
     }
 }
