@@ -6,6 +6,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -40,7 +41,7 @@ public class UserService {
      * @param tel
      * @return 返回用户
      */
-    public User getUserByTel(String tel) {
-        return userDao.getUserByTel(tel);
+    public Optional<User> getUserByTel(String tel) {
+        return Optional.ofNullable(userDao.getUserByTel(tel));
     }
 }

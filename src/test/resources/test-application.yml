@@ -10,3 +10,10 @@ mybatis:
 
 # docker 方式启动一个数据库，注意端口 正式的数据库和测试数据库应该隔离
 # docker run -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=wxshop -p 3308:3306 -d mysql
+
+wxshop:
+  redis:
+    host: 127.0.0.1
+    port: 6380
+
+# docker run -d -p 6380:6379 --name=redis-wxshop redis
