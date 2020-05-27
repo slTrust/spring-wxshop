@@ -159,6 +159,7 @@ public class AuthController {
      */
     @GetMapping("/status")
     public Object loginStatus() {
+        System.out.println("123");
         if (UserContext.getCurrentUser() == null) {
             return LoginResponse.notLogin();
         } else {

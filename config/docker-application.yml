@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:mysql://10.0.1.86:3306/wxshop?useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis:
+  config-location: classpath:db/mybatis/config.xml
+
+wxshop:
+  redis:
+    host: 10.0.1.86
+    port: 6379
+
